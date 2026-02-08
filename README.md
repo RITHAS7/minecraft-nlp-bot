@@ -4,7 +4,7 @@
 
 This isn't another command-based bot. Using GPT-4o-mini through OpenRouter, this bot understands natural language and has a personality. Say "dawg build me a crib?" and it will. Tell it "there's a zombie behind you!" and it fights back. Ask "how are you doing?" and it responds like a person would.
 
-Built with mineflayer, it can mine, build structures, fight mobs, follow players, and manage inventory - all while you watch through a live web dashboard with first-person POV streaming.
+Built with mineflayer, acts as your companion, it can mine, build structures, fight mobs, follow players, and manage inventory - all while you watch through a live web dashboard with first-person POV streaming.
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Node](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen.svg)
