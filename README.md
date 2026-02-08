@@ -1,4 +1,4 @@
-"# 🤖 AI-Powered Minecraft Bot with Live Dashboard
+AI-Powered Minecraft Bot with Live Dashboard
 
 An intelligent Minecraft bot powered by OpenAI's GPT-4o-mini with Openrouter api that can understand natural language commands, perform complex tasks, and provide a real-time web dashboard for monitoring and control.
 
