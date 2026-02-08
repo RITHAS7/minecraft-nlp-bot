@@ -1,0 +1,34 @@
+{
+  "name": "pengu-minecraft-bot",
+  "version": "1.0.0",
+  "description": "AI-powered Minecraft bot with live web dashboard",
+  "main": "minecraft_bot_integrated.js",
+  "scripts": {
+    "start": "node minecraft_bot_integrated.js",
+    "dev": "nodemon minecraft_bot_integrated.js"
+  },
+  "keywords": [
+    "minecraft",
+    "bot",
+    "ai",
+    "mineflayer",
+    "dashboard"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "canvas": "^3.2.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "minecraft-data": "^3.55.0",
+    "mineflayer": "^4.17.0",
+    "mineflayer-pathfinder": "^2.4.3",
+    "prismarine-viewer": "^1.24.0",
+    "socket.io": "^4.7.2",
+    "vec3": "^0.1.8"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
