@@ -25,10 +25,6 @@ Built with mineflayer, acts as your companion, it can mine, build structures, fi
 - [Usage](#usage)
 - [Bot Capabilities](#bot-capabilities)
 - [Web Dashboard](#web-dashboard)
-- [Architecture](#architecture)
-- [API Reference](#api-reference)
-- [Project Structure](#project-structure)
-- [Troubleshooting](#troubleshooting)
 
 
 ## ✨ Features
