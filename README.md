@@ -2,7 +2,7 @@
 
 **Talk to your Minecraft bot like a real player.**
 
-This isn't another command-based bot. Using GPT-4o-mini through OpenRouter, this bot understands natural language and has a personality. Say "can you build me a house?" and it will. Tell it "there's a zombie behind you!" and it fights back. Ask "how are you doing?" and it responds like a person would.
+This isn't another command-based bot. Using GPT-4o-mini through OpenRouter, this bot understands natural language and has a personality. Say "dawg build me a crib?" and it will. Tell it "there's a zombie behind you!" and it fights back. Ask "how are you doing?" and it responds like a person would.
 
 Built with mineflayer, it can mine, build structures, fight mobs, follow players, and manage inventory - all while you watch through a live web dashboard with first-person POV streaming.
 
@@ -96,11 +96,11 @@ Works in any modern browser. Command the bot without even launching Minecraft.
 The bot understands natural language. Here are real examples:
 
 **Building:**
-- *"Can you build me a house?"*
+- *"build ma crib here"*
 - *"Build a house over there"*
 
 **Mining:**
-- *"Mine 10 cobblestone"*
+- *"Mine 10 cobblestones"*
 - *"Get me some oak logs"*
 - *"I need 5 dirt blocks"*
 
@@ -110,12 +110,12 @@ The bot understands natural language. Here are real examples:
 - *"Show me your inventory"*
 
 **Following & Control:**
-- *"Follow me"*
-- *"Stop following"*
+- *"Follow me here"*
+- *"Stop following bot"*
 - *"Stop everything you're doing"*
 
 **Combat:**
-- *"Kill that zombie"*
+- *"Slime that zombie"*
 - *"Attack the creeper"*
 
 **Items:**
@@ -197,28 +197,6 @@ Create a `.env` file in the root directory:
 ```env
 # OpenRouter API Configuration
 OPENROUTER_API_KEY=your_api_key_here
-
-# Bot Configuration (optional, can modify in code)
-BOT_USERNAME=Pengu
-MINECRAFT_HOST=localhost
-MINECRAFT_PORT=56272
-```
-
-### 4. (Optional) Install Canvas System Dependencies
-
-If canvas installation fails, install system dependencies:
-
-**Windows:**
-- No additional steps usually needed
-
-**macOS:**
-```bash
-brew install pkg-config cairo pango libpng jpeg giflib librsvg
-```
-
-**Ubuntu/Debian:**
-```bash
-sudo apt-get install build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
 ```
 
 ## ⚙️ Configuration
@@ -271,11 +249,6 @@ const PORT = 3000; // Web dashboard port
 npm start
 ```
 
-Or with auto-restart on changes:
-```bash
-npm run dev
-```
-
 ### Accessing the Dashboard
 
 1. **Web Interface**: Open `http://localhost:3000` in your browser
@@ -300,12 +273,12 @@ The bot understands natural, conversational language. You don't need exact comma
 **Works:**
 - "mine 10 cobblestone" ✅
 - "can you get me some cobblestone?" ✅  
-- "I need cobblestone" ✅
+- "need cobblestones" ✅
 
 **Building Examples:**
-- "build me a house" ✅
+- "build me a crib" ✅
 - "can you build a house?" ✅
-- "build a house please" ✅
+- "house please" ✅
 
 The AI figures out your intent from context. It also responds with personality - not just "OK" but things like "Sure thing!" or "On it!" or even "Hey! Not cool!" when attacked.
 
@@ -512,193 +485,4 @@ Real-time metrics updated every 2 seconds:
 5. **Feedback**: Results sent to both in-game chat and web dashboard via Socket.IO
 6. **State Update**: Dashboard updates inventory, health, position, task status
 
-### Key Components
 
-#### AI Decision Engine
-```javascript
-async function askAI(message, username, context)
-```
-- Sends user message + bot context (current task, health, inventory) to GPT-4o-mini via OpenRouter
-- AI decides whether to respond with text or call a function
-- Function calls include parameters (e.g., which block to mine, how many)
-- AI also generates the chat message to send to player
-- Handles errors gracefully with fallback responses
-
-#### Task Execution Layer
-- Independent async functions for each capability
-- State management prevents conflicts
-- Error handling with user feedback
-
-#### Real-Time Communication
-- Socket.IO events:
-  - `terminal-output`: Console logs
-  - `bot-stats`: Health, position, inventory
-  - `chat-message`: Chat messages
-  - `bot-status`: Connection events
-  - `pov-ready`: Viewer initialization
-
-## 📡 API Reference
-
-### Socket.IO Events
-
-#### Client → Server
-
-| Event | Data | Description |
-|-------|------|-------------|
-| `player-message` | `string` | Command from web interface |
-
-#### Server → Client
-
-| Event | Data | Description |
-|-------|------|-------------|
-| `bot-stats` | `{health, food, position, inventory, task}` | Bot metrics |
-| `chat-message` | `{username, message, type}` | Chat message |
-| `terminal-output` | `{type, message, timestamp}` | Console log |
-| `bot-status` | `{status, message}` | Connection status |
-| `pov-ready` | `{port}` | POV viewer port |
-
-### OpenRouter API Integration
-
-#### Request Format
-```javascript
-{
-  model: "openai/gpt-4o-mini",
-  messages: [
-    { role: "system", content: "System prompt" },
-    { role: "user", content: "User message" }
-  ],
-  tools: [...], // Function definitions
-  tool_choice: "auto"
-}
-```
-
-#### Response Format
-```javascript
-{
-  choices: [{
-    message: {
-      content: "Text response", // OR
-      tool_calls: [{
-        function: {
-          name: "function_name",
-          arguments: "{...}"
-        }
-      }]
-    }
-  }]
-}
-```
-
-## 📁 Project Structure
-
-```
-minecraft-nlp-bot/
-├── minecraft_bot_integrated.js   # Main bot logic
-├── package.json                  # Dependencies & scripts
-├── .env                         # Environment variables (create this)
-├── .gitignore                   # Git ignore rules
-├── README.md                    # This file
-│
-├── public/                      # Web dashboard files
-│   ├── index.html              # Main dashboard page
-│   ├── styles.css              # Styling (if separated)
-│   ├── README.md               # Frontend docs
-│   │
-│   ├── block/                  # Minecraft block textures metadata
-│   │   ├── *.png.mcmeta       # Animation data for blocks
-│   │   └── ...
-│   │
-│   └── item/                   # Minecraft item textures metadata
-│       ├── *.png.mcmeta       # Animation data for items
-│       └── ...
-│
-└── node_modules/               # NPM packages (auto-generated)
-```
-
-### Key Files
-
-- **minecraft_bot_integrated.js**: 
-  - Bot initialization
-  - AI integration
-  - Task execution functions
-  - Express server setup
-  - Socket.IO handlers
-  - Event listeners
-
-- **public/index.html**:
-  - Dashboard UI
-  - Socket.IO client
-  - Real-time updates
-  - Chat interface
-  - Terminal output display
-
-- **package.json**:
-  - Project metadata
-  - Dependencies
-  - Scripts (start, dev)
-
-- **.env**:
-  - OPENROUTER_API_KEY
-  - Optional bot configuration
-
-## 🐛 Common Issues
-
-### Bot Won't Connect to Minecraft Server
-
-**Error**: `Error: connect ECONNREFUSED`
-
-**Fix**:
-1. Make sure your Minecraft server is actually running
-2. Check the host and port in `BOT_CONFIG` match your server
-3. If using a local server, set `online-mode=false` in server.properties
-4. Test by connecting with the Minecraft client first
-
-### Canvas Won't Install
-
-**Error**: `Error: Cannot find module 'canvas'`
-
-**Fix**:
-1. Install system dependencies first (see Installation section above)
-2. On Windows: Install Visual Studio Build Tools
-3. Try: `npm install canvas --build-from-source`
-4. Use Node.js v16 or v18 (v20+ sometimes has compatibility issues)
-
-### OpenRouter API Issues
-
-**Error**: `API Error: Invalid API key`
-
-**Fix**:
-1. Make sure `.env` file exists in the project root folder
-2. Check that your API key is correct (copy-paste, watch for extra spaces)
-3. Verify you have credits in your OpenRouter account
-4. Test your API key at https://openrouter.ai/
-
-### Bot Stops Responding
-
-**Issue**: Bot stands still and doesn't respond
-
-**Fix**:
-1. Tell it to "stop everything" to clear tasks
-2. Check the terminal/console for error messages
-3. The bot might be waiting for a task to finish (like reaching a faraway block)
-4. Restart the bot: Ctrl+C then `npm start`
-
-### POV Viewer Blank/Won't Load
-
-**Issue**: Port 3001 shows error or nothing loads
-
-**Fix**:
-1. Wait 5-10 seconds after the bot spawns in-game
-2. Look for "POV Viewer started on http://localhost:3001" in terminal
-3. Make sure nothing else is using port 3001
-4. Try `http://localhost:3001` (not 127.0.0.1)
-
-### High CPU/Memory Usage
-
-**Issue**: Node.js using too much CPU or RAM
-
-**Fix**:
-1. Lower `SEARCH_RADIUS` and `COMBAT_RANGE` in the config (try 16 instead of 32)
-2. Increase `ATTACK_INTERVAL` from 500ms to 1000ms
-3. Close the POV viewer when you don't need it (it's resource-intensive)
-4. Stick with gpt-4o-mini (cheapest and fastest model)
